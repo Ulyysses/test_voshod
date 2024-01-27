@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 const ItemModal = ({
   id,
@@ -25,24 +26,24 @@ const ItemModal = ({
   const { onClose } = useDisclosure();
   const router = useRouter();
 
-  const fetchModalData = (id: string) =>
+  const fetchModalData = useCallback((id: string) =>
     fetch("https://taxivoshod.ru/testapi/?w=item&id=" + id).then(
       (res) => res.json() as unknown as IItemModal
-    );
+    ), []);
 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["modal", id],
     queryFn: () => fetchModalData(id),
   });
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     if (isInsideList) {
       router.back();
     } else {
       router.push("/list");
     }
     onClose();
-  };
+  }, [isInsideList, onClose, router]);
 
   if (isError) {
     return <span>Error: {error.message}</span>;

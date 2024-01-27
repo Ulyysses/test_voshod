@@ -6,33 +6,34 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import ItemCard from "../item-card";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { useCallback } from "react";
 
 const ItemList = ({ page }: { page: string }) => {
   const router = useRouter();
 
-  const fetchList = (page: string) =>
+  const fetchList = useCallback((page: string) =>
     fetch("https://taxivoshod.ru/testapi/?w=list&page=" + page).then(
       (res) => res.json() as unknown as IPaging<IItem>
-    );
+    ), []);
 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["list", page],
     queryFn: () => fetchList(page),
   });
 
-  const handlePageChange = (newPage: number) => {
+  const handlePageChange = useCallback((newPage: number) => {
     router.push(`/list/${newPage}`);
-  };
+  }, [router]);
 
-  const handleClickPrevPage = () => {
+  const handleClickPrevPage = useCallback(() => {
     handlePageChange(Math.max(Number(page) - 1, 1));
-  };
+  }, [handlePageChange, page]);
 
-  const handleClickNextPage = () => {
+  const handleClickNextPage = useCallback(() => {
     if (data && data.page < data.pages) {
       handlePageChange(Number(page) + 1);
     }
-  };
+  }, [data, handlePageChange, page]);
 
   if (isPending) {
     return (
