@@ -1,19 +1,22 @@
-import { Heading } from "@chakra-ui/react";
+import { Heading, Link } from "@chakra-ui/react";
 import { Metadata } from "next";
-import Link from "next/link";
+import LinkNext from "next/link";
 
 export const metadata: Metadata = {
   title: "Восход",
 };
 
-const ListPage = () => {
+const MainPage = () => {
   return (
-    <Link href="/list">
+    <>
       <Heading as="h1" size="xl">
-        Перейти к списку элементов
+        Добро пожаловать 
       </Heading>
-    </Link>
+      <Link as={LinkNext} href="/list">
+        Перейти к списку элементов
+      </Link>
+    </>
   );
 };
 
-export default ListPage;
+export default MainPage;

@@ -15,3 +15,9 @@ export interface ModalPage {
     id: string
   };
 }
+
+export interface IItemModal {
+  result: number;
+  name: string;
+  text: string;
+}

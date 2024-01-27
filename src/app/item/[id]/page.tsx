@@ -1,5 +1,5 @@
-import List from "@/components/list";
-import ItemModal from "@/components/modal/ItemModal";
+import ItemList from "@/components/item-list";
+import ItemModal from "@/components/item-modal";
 import { ModalPage } from "@/types";
 import { Metadata } from "next";
 
@@ -7,16 +7,16 @@ export const metadata: Metadata = {
   title: "Элемент",
 };
 
-const ListPage = ({ params }: ModalPage) => {
+const ItemPage = ({ params }: ModalPage) => {
   const id = params.id;
   metadata.title = `Элемент ${id}`;
 
   return (
     <>
-      <List page={"1"} />
+      <ItemList page={"1"} />
       <ItemModal id={id} isInsideList={false}/>
     </>
   );
 };
 
-export default ListPage;
+export default ItemPage;

@@ -1,18 +1,12 @@
-import ItemModal from "@/components/modal/ItemModal";
+import ItemModal from "@/components/item-modal";
 import { ModalPage } from "@/types";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Элемент",
-};
-
-const ModalListPage = ({ params }: ModalPage) => {
+const ItemModalPage = ({ params }: ModalPage) => {
   const id = params.id;
-  metadata.title = `Элемент ${id}`;
   
   return (
     <ItemModal id={id} />
   );
 };
 
-export default ModalListPage;
+export default ItemModalPage;

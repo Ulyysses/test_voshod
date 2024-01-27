@@ -1,14 +1,13 @@
 "use client";
 
 import { IItem, IPaging } from "@/types";
-import { Button, Card, Flex } from "@chakra-ui/react";
+import { Button, Flex, Spinner } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Item from "../item";
+import ItemCard from "../item-card";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
-const List = ({ page }: { page: string }) => {
+const ItemList = ({ page }: { page: string }) => {
   const router = useRouter();
 
   const fetchList = (page: string) =>
@@ -25,8 +24,22 @@ const List = ({ page }: { page: string }) => {
     router.push(`/list/${newPage}`);
   };
 
+  const handleClickPrevPage = () => {
+    handlePageChange(Math.max(Number(page) - 1, 1));
+  };
+
+  const handleClickNextPage = () => {
+    if (data && data.page < data.pages) {
+      handlePageChange(Number(page) + 1);
+    }
+  };
+
   if (isPending) {
-    return <span>Loading...</span>;
+    return (
+      <Flex height="80vh" alignItems="center" justifyContent="center">
+        <Spinner />
+      </Flex>
+    );
   }
 
   if (isError) {
@@ -37,31 +50,25 @@ const List = ({ page }: { page: string }) => {
     <Flex direction="column" gap={2}>
       <Flex gap="10px">
         <Button
-          onClick={() => handlePageChange(Math.max(Number(page) - 1, 1))}
+          onClick={handleClickPrevPage}
           isDisabled={page === "1"}
+          aria-label="Предыдущая страница"
         >
           <ChevronLeftIcon />
         </Button>
         <Button
-          onClick={() => {
-            if (data.page < data.pages) {
-              handlePageChange(Number(page) + 1);
-            }
-          }}
+          onClick={handleClickNextPage}
           isDisabled={data.page === data.pages}
+          aria-label="Следующая страница"
         >
           <ChevronRightIcon />
         </Button>
       </Flex>
-      {data.items.map((item) => (
-        <Card overflow="hidden" variant="outline" maxH="200px" key={item.id}>
-          <Link href={`/item/${item.id}`}>
-            <Item name={item.name} />
-          </Link>
-        </Card>
+      {data.items.map(({ id, name }) => (
+        <ItemCard key={id} name={name} id={id} />
       ))}
     </Flex>
   );
 };
 
-export default List;
+export default ItemList;

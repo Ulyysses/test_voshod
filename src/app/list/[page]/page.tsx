@@ -1,22 +1,21 @@
-import List from "@/components/list";
-import MainLayout from "@/components/main-layout";
+import ItemList from "@/components/item-list";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Страница",
 };
 
-interface ListPage {
+interface ItemListPage {
   params: {
     page: string;
   };
 }
 
-const ListPage = ({ params }: ListPage) => {
+const ItemListPage = ({ params }: ItemListPage) => {
   const page = params.page;
   metadata.title = `Страница ${page}`;
  
-  return <List page={page} />;
+  return <ItemList page={page} />;
 };
 
-export default ListPage;
+export default ItemListPage;
