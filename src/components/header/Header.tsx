@@ -1,6 +1,6 @@
 "use client";
 
-import MainLayout from "@/main-layout";
+import MainLayout from "@/components/main-layout";
 import {
   Box,
   Button,

@@ -1,5 +1,5 @@
-import List from "@/list";
-import MainLayout from "@/main-layout";
+import List from "@/components/list";
+import MainLayout from "@/components/main-layout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

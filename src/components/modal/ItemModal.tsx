@@ -14,26 +14,21 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const ItemModal = ({page, setModal}) => {
-  const {onClose} = useDisclosure();
+const ItemModal = () => {
+  const {onClose, onOpen} = useDisclosure();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   onOpen();
-  // }, [onOpen]);
+  useEffect(() => {
+    onOpen();
+  }, [onOpen]);
 
-  // const handleCloseModal = (page: string) => {
-    
-  //   // router.back();
-  //   window.history.replaceState(null, "", `/list/${page}`);
-  //   onClose();
-  // }
+  const handleCloseModal = () => {
+    router.back();
+    onClose();
+  }
 
   return (
-    <Modal isOpen={true} onClose={() => {
-      setModal(false)
-      window.history.replaceState(null, "", `/list/${page}`);
-    }}>
+    <Modal isOpen={true} onClose={handleCloseModal}>
       <ModalOverlay />
       <ModalContent p="40px">
         <ModalCloseButton />

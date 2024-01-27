@@ -1,25 +1,14 @@
 "use client";
 
-import ItemModal from "@/modal/ItemModal";
 import { IItem, IPaging } from "@/types";
-import {
-  Button,
-  Card,
-  CardBody,
-  Flex,
-  Heading,
-  Link,
-  Stack,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Button, Card, CardBody, Flex, Heading, Stack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import Item from "../item";
 
 const List = ({ page }: { page: string }) => {
   const router = useRouter();
-  const [modal, setModal] = useState(false);
-  console.log("🚀 ~ List ~ setModal:", setModal)
 
   const fetchList = (page: string) =>
     fetch("https://taxivoshod.ru/testapi/?w=list&page=" + page).then(
@@ -31,17 +20,8 @@ const List = ({ page }: { page: string }) => {
     queryFn: () => fetchList(page),
   });
 
-  const items: IItem[] = data?.items || [];
-
   const handlePageChange = (newPage: number) => {
     router.push(`/list/${newPage}`);
-  };
-
-  const handleOpenModal = () => {
-    // router.push("/item/5");
-    // window.location.href = "/item/5"
-    window.history.replaceState(null, "", "/item/5");
-    setModal(true);
   };
 
   if (isPending) {
@@ -72,21 +52,13 @@ const List = ({ page }: { page: string }) => {
           Next Page
         </Button>
       </Flex>
-      {items.map((item) => (
+      {data.items.map((item) => (
         <Card overflow="hidden" variant="outline" maxH="200px" key={item.id}>
-          <Button onClick={handleOpenModal}>
-            <Stack direction="row" alignItems="center" flex="1">
-              <CardBody>
-                <Heading size="md" mb="15px">
-                  {item.name}
-                </Heading>
-              </CardBody>
-            </Stack>
-          </Button>
+          <Link href={`/item/${item.id}`}>
+            <Item name={item.name}/>
+          </Link>
         </Card>
       ))}
-      
-      {modal && <ItemModal page={page} setModal={setModal}/>}
     </Flex>
   );
 };

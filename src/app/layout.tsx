@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ProvidersChakra } from "./providersChakra";
-import Header from "@/header";
+import Header from "@/components/header";
 import { ProvidersTanstack } from "./providersTanstack";
-import MainLayout from "@/main-layout";
+import MainLayout from "@/components/main-layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,8 +14,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <html lang="ru">
@@ -23,7 +25,7 @@ export default function RootLayout({
         <ProvidersTanstack>
           <ProvidersChakra>
             <Header />
-            <MainLayout>{children}</MainLayout>
+            <MainLayout>{children}{modal}</MainLayout>
           </ProvidersChakra>
         </ProvidersTanstack>
       </body>
