@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Item from "../item";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 const List = ({ page }: { page: string }) => {
   const router = useRouter();
@@ -39,7 +40,7 @@ const List = ({ page }: { page: string }) => {
           onClick={() => handlePageChange(Math.max(Number(page) - 1, 1))}
           isDisabled={page === "1"}
         >
-          Previous Page
+          <ChevronLeftIcon />
         </Button>
         <Button
           onClick={() => {
@@ -49,13 +50,13 @@ const List = ({ page }: { page: string }) => {
           }}
           isDisabled={data.page === data.pages}
         >
-          Next Page
+          <ChevronRightIcon />
         </Button>
       </Flex>
       {data.items.map((item) => (
         <Card overflow="hidden" variant="outline" maxH="200px" key={item.id}>
           <Link href={`/item/${item.id}`}>
-            <Item name={item.name}/>
+            <Item name={item.name} />
           </Link>
         </Card>
       ))}
