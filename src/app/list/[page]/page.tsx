@@ -15,7 +15,7 @@ interface ListPage {
 const ListPage = ({ params }: ListPage) => {
   const page = params.page;
   metadata.title = `Страница ${page}`;
-
+ 
   return <List page={page} />;
 };
 

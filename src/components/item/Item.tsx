@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardBody, Heading, Stack } from "@chakra-ui/react";
+import { CardBody, Heading, Stack } from "@chakra-ui/react";
 
 interface ItemProps {
   name: string;

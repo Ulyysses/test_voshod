@@ -10,14 +10,8 @@ export interface IItem {
   name: string;
 }
 
-export interface IModal {
-  isOpen: boolean;
-  onClose: () => void;
-  data?: IItemModal;
-}
-
-export interface IItemModal {
-  result: number;
-  name: string;
-  text: string;
+export interface ModalPage {
+  params: {
+    id: string
+  };
 }
